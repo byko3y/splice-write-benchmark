@@ -4,7 +4,9 @@ Benchmark performance of writing pages filled with memset into socket. Uses a bu
 
 When `WRITE = true`, buffer is statically allocated, for each subblock a separate call to `memset()` and `write()` is performed on each iteration.
 
-When `WRITE = false`, `vmsplice()+splice()` are employed to write into socket. The buffer is gifted, so the new buffer is `mmap`-ed on each iteration. When `LARGE_MMAP = true`, the 1 MB buffer is `mmap`-ed as a whole, while for `LARGE_MMAP = false` the `mmap()` is called for each subblock. Same goes for `LARGE_VECIO`: `true` - `vmsplice()` and `splice()` are called for 1 MB bufer, `false` - they are called for each subblock. `LARGE_MMAP = true` and `LARGE_VECIO = true` effectively mean absence of subblocks (`vecs_count_order = 0`).
+When `WRITE = false`, `vmsplice()+splice()` are employed to write into socket. The buffer is gifted, so the new buffer is `mmap`-ed on each iteration.  
+When `LARGE_MMAP = true`, the 1 MB buffer is `mmap`-ed as a whole, while for `LARGE_MMAP = false` the `mmap()` is called for each subblock.  
+Same goes for `LARGE_VECIO`: `true` - `vmsplice()` and `splice()` are called for 1 MB bufer, `false` - they are called for each subblock. `LARGE_MMAP = true` and `LARGE_VECIO = true` effectively mean absence of subblocks (`vecs_count_order = 0`).
 
 Build with `make`, run as `./run`.
 
@@ -139,5 +141,7 @@ Single 1M block write
 	Voluntary context switches: 4
 	Involuntary context switches: 450
 ```
+
+Maximum resident set size 2100-2500 kb across all cases.
 
 

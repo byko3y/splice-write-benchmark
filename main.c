@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
         }
 
         const int WRITE = false;
-        const int LARGE_MMAP = false;
+        const int LARGE_MMAP = true;
         const int LARGE_VECIO = false;
 
         #define VEC_COUNT_ORDER 6
@@ -226,12 +226,20 @@ int main(int argc, char *argv[])
 
                 if (LARGE_MMAP)
                 {
-                    munmap(iov[0].iov_base, bufsize * VEC_COUNT);
+                    if (munmap(iov[0].iov_base, bufsize * VEC_COUNT) == -1)
+                    {
+                        fprintf(stderr, "large munmap error %s\n", strerror(errno));
+                        return 1;
+                    }
                 }
                 else
                 {
                     for (int i = 0; i < VEC_COUNT; ++i)
-                        munmap(iov[i].iov_base, bufsize);
+                        if (munmap(iov[i].iov_base, bufsize) == -1)
+                        {
+                            fprintf(stderr, "munmap[%d] error %s\n", i, strerror(errno));
+                            return 1;
+                        }
                 }
             }
         }
