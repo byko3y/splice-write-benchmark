@@ -16,7 +16,7 @@ This program plays a role of server, thus requiring some client to connect to it
 while ! netcat 127.0.0.1 5000 > /dev/null ; do sleep 1 ; done
 ```
 
-My results (Intel(R) Core(TM) i5-6600 CPU @ 3.30GHz):
+My results (Intel(R) Core(TM) i5-6600 CPU @ 3.30GHz, Y-axis in second, less is better):
 
 ![Results](docs/graph.svg)
 
