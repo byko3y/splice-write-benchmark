@@ -16,6 +16,8 @@ while ! netcat 127.0.0.1 5000 > /dev/null ; do sleep 1 ; done
 
 My results (Intel(R) Core(TM) i5-6600 CPU @ 3.30GHz):
 
+![Results](docs/graph.svg)
+
 Single 1M block splice
 ```
 	Command being timed: "./run"
